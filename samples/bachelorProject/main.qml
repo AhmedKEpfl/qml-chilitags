@@ -41,16 +41,44 @@ Window {
         property string webSiteUrl :"https://www.google.fr/?gws_rd=ssl"
         property string messageToDisplay: "Going to google"
 
+        property double currentXValue : 0
+        property double currentYValue: 0
+        property double currentZValue: 0
+
+        property double xOnScreen: 0
+        property double yOnScreen: 0
+
         onVisibilityChanged: {
             if(tag32.visible){
                 webView.url = webSiteUrl;
-                textMessage.text = messageToDisplay + "\n" + tag32.transform.m14;
-
+                textMessage.text = messageToDisplay;
+                increaseVideoOutputSize();
+            } else {
+                increaseBrowserSize();
             }
+        }
+
+        onTransformChanged: {
+            currentXValue = tag32.transform.m14;
+            currentYValue = tag32.transform.m24;
+            currentZValue = tag32.transform.m34;
+            xOnScreen = currentXValue / currentZValue;
+            yOnScreen = currentYValue / currentZValue;
+
+            xOnScreen = (xOnScreen + 0.45) * videoOutputContainer.width / 0.9;
+            yOnScreen = (yOnScreen + 0.34) * videoOutputContainer.height / 0.62;
+
+            putCircleAtPosition(xOnScreen, yOnScreen);
         }
     }
 
+    function putCircleAtPosition(x, y){
+        redCircle.x = x;
+        redCircle.y = y;
+    }
+
     function increaseBrowserSize(){
+        redCircle.visible = false;
         videoOutputContainer.width = 120;
         videoOutputContainer.height = 80;
         webViewContainer.width = window.width;
@@ -59,6 +87,7 @@ Window {
     }
 
     function increaseVideoOutputSize(){
+        redCircle.visible = true;
         videoOutputContainer.width = window.width;
         videoOutputContainer.height = window.height;
         webViewContainer.width = 120;
@@ -77,6 +106,16 @@ Window {
             source: camDevice
             anchors.fill: parent
             filters: chilitags
+        }
+
+        Rectangle {
+             id: redCircle
+             width: (parent.width < parent.height ? parent.width : parent.height) / 10
+             height: width
+             color: "red"
+             border.color: "black"
+             border.width: 1
+             radius: width*0.5
         }
     }
 
