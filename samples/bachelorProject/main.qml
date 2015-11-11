@@ -19,7 +19,7 @@ Window {
 
     Chilitags{
         id: chilitags
-        chiliobjects: [tag2, tag32]
+        chiliobjects: [tag2, tagYoutube, tagGoogle]
     }
 
     ChilitagsObject{
@@ -27,7 +27,7 @@ Window {
         name: "tag_2"
 
         onVisibilityChanged: {
-            if(tag2.visible){
+            if(visible){
                 increaseVideoOutputSize();
             } else {
                 increaseBrowserSize();
@@ -35,41 +35,18 @@ Window {
         }
     }
 
-    ChilitagsObject{
-        id: tag32
+    ChilitagsWebsite {
+        id: tagYoutube
         name: "tag_32"
-        property string webSiteUrl :"https://www.google.fr/?gws_rd=ssl"
-        property string messageToDisplay: "Going to google"
+        webSiteUrl :"https://www.youtube.com/"
+        messageToDisplay: "Going to Youtube"
+    }
 
-        property double currentXValue : 0
-        property double currentYValue: 0
-        property double currentZValue: 0
-
-        property double xOnScreen: 0
-        property double yOnScreen: 0
-
-        onVisibilityChanged: {
-            if(tag32.visible){
-                webView.url = webSiteUrl;
-                textMessage.text = messageToDisplay;
-                increaseVideoOutputSize();
-            } else {
-                increaseBrowserSize();
-            }
-        }
-
-        onTransformChanged: {
-            currentXValue = tag32.transform.m14;
-            currentYValue = tag32.transform.m24;
-            currentZValue = tag32.transform.m34;
-            xOnScreen = currentXValue / currentZValue;
-            yOnScreen = currentYValue / currentZValue;
-
-            xOnScreen = (xOnScreen + 0.45) * videoOutputContainer.width / 0.9;
-            yOnScreen = (yOnScreen + 0.34) * videoOutputContainer.height / 0.62;
-
-            putCircleAtPosition(xOnScreen, yOnScreen);
-        }
+    ChilitagsWebsite {
+        id: tagGoogle
+        name: "tag_10"
+        webSiteUrl: "https://www.google.fr/?gws_rd=ssl"
+        messageToDisplay: "Going to google"
     }
 
     function putCircleAtPosition(x, y){
@@ -116,6 +93,12 @@ Window {
              border.color: "black"
              border.width: 1
              radius: width*0.5
+
+             Text {
+                 id: redCircleText
+
+                 text: "red circle"
+             }
         }
     }
 
@@ -154,4 +137,3 @@ Window {
         }
     }
 }
-
