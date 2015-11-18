@@ -1,0 +1,40 @@
+tag_33
+http://www.jeuxvideo.com/
+Going to jeuxvideo.com
+-------------------------
+tag_28
+https://www.geogebra.org/
+Going to Geogebra
+-------------------------
+tag_29
+http://www.lemonde.fr/
+Going to LeMonde
+-------------------------
+tag_33
+https://www.youtube.com/
+Going to Youtube
+-------------------------
+tag_34
+https://www.ubuntu-fr.org/
+Going to Ubuntu fr
+-------------------------
+tag_6
+http://webmail.epfl.ch/
+Going to webmail epfl
+-------------------------
+tag_7
+Nothing
+Nothing
+-------------------------
+tag_8
+Nothing
+Nothing
+-------------------------
+tag_9
+Nothing
+Nothing
+-------------------------
+tag_20
+Nothing
+Nothing
+-------------------------

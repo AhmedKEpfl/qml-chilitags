@@ -10,13 +10,6 @@ ChilitagsObject {
     property string webSiteUrl :"https://www.youtube.com/"
     property string messageToDisplay: "Going to Youtube"
 
-    property double currentXValue : 0
-    property double currentYValue: 0
-    property double currentZValue: 0
-
-    property double xOnScreen: 0
-    property double yOnScreen: 0
-
     onVisibilityChanged: {
         if(visible){
             webView.url = webSiteUrl;
@@ -29,11 +22,11 @@ ChilitagsObject {
     }
 
     onTransformChanged: {
-        currentXValue = transform.m14;
-        currentYValue = transform.m24;
-        currentZValue = transform.m34;
-        xOnScreen = currentXValue / currentZValue;
-        yOnScreen = currentYValue / currentZValue;
+        var currentXValue = transform.m14;
+        var currentYValue = transform.m24;
+        var currentZValue = transform.m34;
+        var xOnScreen = currentXValue / currentZValue;
+        var yOnScreen = currentYValue / currentZValue;
 
         xOnScreen = (xOnScreen + 0.45) * videoOutput.width / 0.9;
         yOnScreen = (yOnScreen + 0.34) * videoOutput.height / 0.62;
