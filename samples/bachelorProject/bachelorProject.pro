@@ -8,10 +8,13 @@ SOURCES += main.cpp \
 
 RESOURCES += qml.qrc
 
-INCLUDEPATH += /home/ahmed/Documents/epfl/bachelorProject/chilitagsStuff/chilitags/include
+INCLUDEPATH +=
+
+LIBS += -lchilitags
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH +=
+
 
 # Default rules for deployment.
 include(deployment.pri)

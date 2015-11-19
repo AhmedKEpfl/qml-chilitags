@@ -11,7 +11,7 @@ ChilitagsObject {
     property string messageToDisplay: "Going to Youtube"
 
     onVisibilityChanged: {
-        if(visible){
+        if(visible && window.pause == false){
             webView.url = webSiteUrl;
             textMessage.text = messageToDisplay;
             redCircleText.text = messageToDisplay;

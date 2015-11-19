@@ -13,6 +13,25 @@ Window {
     height: maximumHeight
     width: maximumWidth
 
+    property bool started : false;
+    property bool pause: false;
+
+    property list<ChilitagsWebsite> chilitagsWebsites : [
+        ChilitagsWebsite {
+            webSiteUrl: "https://www.google.ch/?gfe_rd=cr&ei=fepNVsnXFuyg8wel1bS4CA"
+            name: "tag_15"
+            messageToDisplay: "Youpi"
+        }
+
+    ]
+
+    onActiveChanged: {
+        if(!started){
+            assignTagsToUrls();
+            started = true;
+        }
+    }
+
     Camera{
         id:camDevice
         imageCapture.resolution: "640x480" //Android sets the viewfinder resolution as the capture one
@@ -21,19 +40,14 @@ Window {
 
     Chilitags{
         id: chilitags
-        chiliobjects: [tagLoadUrls, tagGoogleDocs, tagYoutube, tagGoogle, tag0,
+        chiliobjects:
+            [tagYoutube, tagGoogle, tag0,
             tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9]
     }
 
-    ChilitagsObject {
-        id: tagLoadUrls
-        name: "tag_15"
-
-        onVisibilityChanged: {
-            if(visible){
-                assignTagsToUrls();
-            }
-        }
+    Chilitags {
+        id: chilitagsConfigFile
+        chiliobjects: chilitagsWebsites
     }
 
     ChilitagsWebsite {
@@ -51,11 +65,40 @@ Window {
         messageToDisplay: "Going to google"
     }
 
-    ChilitagsWebsite {
-        id: tagGoogleDocs
-        name: "tag_2"
-        webSiteUrl: "https://docs.google.com/spreadsheets/d/1CO4zUovPJ2W5H_kZiLa0KEVaE0jxvBTrKYAxfGfI4N8/edit#gid=0"
-        messageToDisplay: "Going to google docs"
+    Timer {
+        interval: 500
+        repeat: true
+        running: true
+
+        onTriggered: {
+            getPauseStateFromServer();
+        }
+    }
+
+    function getPauseStateFromServer(){
+        var request = new XMLHttpRequest();
+        request.open('GET', 'file:///home/ahmed/Documents/epfl/bachelorProject/MyBachelorProject/qml-chilitags/samples/bachelorProject/pause.txt');
+        request.onreadystatechange = function(event) {
+            if (request.readyState === XMLHttpRequest.DONE) {
+                var lines = request.responseText;
+                if(lines.substring(0, 5) == "pause"){
+                    activatePause();
+                } else {
+                    deactivatePause();
+                }
+            }
+        }
+        request.send();
+    }
+
+    function activatePause() {
+        webViewContainer.visible = false;
+        pause = true;
+    }
+
+    function deactivatePause() {
+        webViewContainer.visible = true;
+        pause = false;
     }
 
     ChilitagsWebsite {
@@ -88,6 +131,7 @@ Window {
         name: ""
         webSiteUrl: ""
         messageToDisplay: ""
+
     }
 
     ChilitagsWebsite {
@@ -134,7 +178,8 @@ Window {
         webViewContainer.height = window.height;
         videoOutputContainer.z = 1;
         webViewContainer.z = 0;
-
+        webViewContainer.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded;
+        webViewContainer.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded;
     }
 
     function increaseVideoOutputSize(){
@@ -145,11 +190,20 @@ Window {
         webViewContainer.height = 80;
         videoOutputContainer.z = 0;
         webViewContainer.z = 1;  
+        webViewContainer.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff;
+        webViewContainer.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff;
     }
 
     function assignTagsToUrls(){
         textMessage.text = "Assigning tags to urls";
         var tagUrlPairs = FileIO.read().split('\n');
+
+        /*
+        for(var i = 0; i < 10; ++i){
+            chilitagsWebsites[i].name = tagUrlPairs[4 * i];
+            chilitagsWebsites[i].webSiteUrl = tagUrlPairs[4 * i + 1];
+            chilitagsWebsites[i].messageToDisplay = tagUrlPairs[4 * i + 2];
+        }*/
 
         tag0.name = tagUrlPairs[0];
         tag0.webSiteUrl = tagUrlPairs[1];
@@ -191,7 +245,6 @@ Window {
         tag9.webSiteUrl = tagUrlPairs[37];
         tag9.messageToDisplay = tagUrlPairs[38];
 
-
         textMessage.text = "Tags have been assigned";
     }
 
@@ -206,7 +259,7 @@ Window {
             id: videoOutput
             source: camDevice
             anchors.fill: parent
-            filters: chilitags
+            filters: [chilitags, chilitagsConfigFile]
         }
 
         Rectangle {
@@ -233,6 +286,7 @@ Window {
         width: initialWidth
         height: initialHeight
 
+
         WebView{
             id: webView
             url: "https://fr.wikipedia.org/"
@@ -258,6 +312,19 @@ Window {
         Text{
             id: textMessage
             text: "Doing nothing"
+        }
+    }
+
+    Rectangle {
+        id: pauseRectangle
+        anchors.fill: parent
+        color: "white"
+        z : -1
+
+        Text {
+            id : pauseText
+            text: qsTr("")
+            anchors.centerIn: parent
         }
     }
 }

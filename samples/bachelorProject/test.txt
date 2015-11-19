@@ -3,7 +3,7 @@ http://www.jeuxvideo.com/
 Going to jeuxvideo.com
 -------------------------
 tag_28
-https://www.geogebra.org/
+https://web.geogebra.org/#geometry
 Going to Geogebra
 -------------------------
 tag_29
