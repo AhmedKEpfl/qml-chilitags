@@ -8,16 +8,42 @@ import QtWebKit 3.0
 ChilitagsObject {
     name: "tag_32"
     property string webSiteUrl :"https://www.youtube.com/"
-    property string messageToDisplay: "Going to Youtube"
+    property string messageToDisplay: "Youtube"
+
+    property string messageLoading: "Preparing for " + messageToDisplay
+    property string messageReady: "Going to " + messageToDisplay
+    property int counter: 0
+    property bool counterIncrementing: false
 
     onVisibilityChanged: {
         if(visible && window.pause == false){
-            webView.url = webSiteUrl;
-            textMessage.text = messageToDisplay;
-            redCircleText.text = messageToDisplay;
+            redCircleText.text = messageLoading;
             increaseVideoOutputSize();
+            counter = 0;
+            counterIncrementing = true;
         } else {
             increaseBrowserSize();
+            counter = 0;
+            counterIncrementing = false;
+        }
+    }
+
+    Timer {
+        interval: 1000
+        repeat: true
+        running: true
+
+        onTriggered: {
+            if(counterIncrementing){
+                if(counter == 100){
+                    webView.url = webSiteUrl;
+                    textMessage.text = messageReady;
+                    redCircleText.text = messageReady;
+                    counterIncrementing = false;
+                }
+
+                counter++;
+            }
         }
     }
 
@@ -31,7 +57,7 @@ ChilitagsObject {
         xOnScreen = (xOnScreen + 0.45) * videoOutput.width / 0.9;
         yOnScreen = (yOnScreen + 0.34) * videoOutput.height / 0.62;
 
-        putCircleAtPosition(xOnScreen, yOnScreen);
+        putCircleAtPosition(xOnScreen, yOnScreen, counter);
     }
 }
 

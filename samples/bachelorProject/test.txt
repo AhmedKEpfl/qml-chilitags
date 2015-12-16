@@ -1,4 +1,4 @@
-tag_33
+tag_21
 http://www.jeuxvideo.com/
 Going to jeuxvideo.com
 -------------------------
@@ -11,8 +11,8 @@ http://www.lemonde.fr/
 Going to LeMonde
 -------------------------
 tag_33
-https://www.youtube.com/
-Going to Youtube
+https://www.youtube.com/watch?v=WaJ3svvJaIw&html5=True
+Going to Youtube Geogebra video
 -------------------------
 tag_34
 https://www.ubuntu-fr.org/
