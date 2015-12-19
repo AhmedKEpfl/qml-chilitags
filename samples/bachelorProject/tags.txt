@@ -18,7 +18,7 @@ tag_34
 https://www.ubuntu-fr.org/
 Ubuntu fr
 -------------------------
-tag_6
+tag_32
 http://webmail.epfl.ch/
 webmail epfl
 -------------------------

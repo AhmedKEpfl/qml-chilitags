@@ -13,6 +13,8 @@ Window {
     height: maximumHeight
     width: maximumWidth
 
+    property int counterSteps: 8
+
     property bool started : false;
     property bool pause: false;
 
@@ -79,7 +81,7 @@ Window {
         redCircle.x = x;
         redCircle.y = y;
 
-        greenCircle.width = counter * redCircle.width / 10;
+        greenCircle.width = (counter - 1) * redCircle.width / counterSteps;
     }
 
     function increaseBrowserSize(){
@@ -199,19 +201,6 @@ Window {
         Text{
             id: textMessage
             text: "Doing nothing"
-        }
-    }
-
-    Rectangle {
-        id: pauseRectangle
-        anchors.fill: parent
-        color: "white"
-        z : -1
-
-        Text {
-            id : pauseText
-            text: qsTr("")
-            anchors.centerIn: parent
         }
     }
 }

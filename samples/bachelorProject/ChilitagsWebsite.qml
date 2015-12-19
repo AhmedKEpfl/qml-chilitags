@@ -10,6 +10,9 @@ ChilitagsObject {
     property string webSiteUrl :"https://www.youtube.com/"
     property string messageToDisplay: "Youtube"
 
+    property int timeLoading: 2000
+
+
     property string messageLoading: "Preparing for " + messageToDisplay
     property string messageReady: "Going to " + messageToDisplay
     property int counter: 0
@@ -29,13 +32,13 @@ ChilitagsObject {
     }
 
     Timer {
-        interval: 1000
+        interval: timeLoading / window.counterSteps
         repeat: true
         running: true
 
         onTriggered: {
             if(counterIncrementing){
-                if(counter == 100){
+                if(counter == window.counterSteps){
                     webView.url = webSiteUrl;
                     textMessage.text = messageReady;
                     redCircleText.text = messageReady;

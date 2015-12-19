@@ -9,7 +9,7 @@ FileIO::FileIO()
 }
 
 void FileIO::save(QString text){
-    QFile file("test.txt");
+    QFile file("tags.txt");
 
     if(file.open(QIODevice::ReadWrite)){
         QTextStream stream(&file);
@@ -22,7 +22,7 @@ void FileIO::save(QString text){
 
 QString FileIO::read(){
     {
-        QFile file("test.txt");
+        QFile file("tags.txt");
         QString fileContent;
         if ( file.open(QIODevice::ReadOnly) ) {
             QString line;
