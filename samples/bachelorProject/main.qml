@@ -200,7 +200,7 @@ Window {
 
         Text{
             id: textMessage
-            text: "Doing nothing"h
+            text: "Doing nothing"
         }
     }
 }
